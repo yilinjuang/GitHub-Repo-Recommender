@@ -1,0 +1,3 @@
+*.o
+octomender/octomender
+__pycache__
