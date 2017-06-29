@@ -3,7 +3,7 @@ import sys
 
 # Check arguments.
 if len(sys.argv) < 3:
-    print("Error: Missing arguments.")
+    print("Error: missing arguments.")
     print("Usage: generate.py <input-data-basename> <output-graph-basename> [-p|--project]")
     sys.exit(1)
 

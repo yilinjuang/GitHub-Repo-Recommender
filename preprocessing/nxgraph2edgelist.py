@@ -3,7 +3,7 @@ import sys
 
 # Check arguments.
 if len(sys.argv) < 3:
-    print("Error: Missing arguments.")
+    print("Error: missing arguments.")
     print("Usage: nxgraph2edgelist.py <input-nxgraph> <output-edgelist-basename>")
     sys.exit(1)
 

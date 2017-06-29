@@ -3,7 +3,7 @@ import sys
 
 # Check arguments.
 if len(sys.argv) < 4:
-    print("Error: Missing arguments.")
+    print("Error: missing arguments.")
     print("Usage: filter.py {-m|-t|-p} <input-unipartite-nxgraph> <output-filtered-nxgraph>")
     sys.exit(1)
 

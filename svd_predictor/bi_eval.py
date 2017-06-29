@@ -8,7 +8,7 @@ from multiprocessing import Pool
 
 # Check arguments.
 if len(sys.argv) < 4:
-    print("Error: Missing arguments.")
+    print("Error: missing arguments.")
     print("Usage: bi_pred.py <input-bipartite-nxgraph> <input-data-basename> <K>")
     sys.exit(1)
 

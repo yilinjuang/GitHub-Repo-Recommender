@@ -7,7 +7,7 @@ from multiprocessing import Pool
 
 # Check arguments.
 if len(sys.argv) < 4:
-    print("Error: Missing arguments.")
+    print("Error: missing arguments.")
     print("Usage: parse.py {-m|--member|-w|--watch} {<input-json-directory>|<input-json-file>} <output-data-basename> [n-process]")
     sys.exit(1)
 

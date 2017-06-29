@@ -4,7 +4,7 @@ import sys
 
 # Check arguments.
 if len(sys.argv) < 3:
-    print("Error: Missing arguments.")
+    print("Error: missing arguments.")
     print("Usage: whatsthisrepoid.py <input-log-file> <input-repo-data-file>")
     sys.exit(1)
 
