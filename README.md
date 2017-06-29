@@ -100,7 +100,7 @@ Ex:    ./octomender graph/2017-05_bi.edgelist > log/2017-05.log
 ```
 
 ### [whatsthisrepoid.py](octomender/whatsthisrepoid.py)
-Convert log file to readable format including interpret repo id to repo name.
+Convert log file to readable format including interpretation of repo id to repo name.
 ```
 Usage: whatsthisrepoid.py <input-log-file> <input-repo-data-file>
 Ex:    whatsthisrepoid.py log/2017-05.log data/2017-05.repo

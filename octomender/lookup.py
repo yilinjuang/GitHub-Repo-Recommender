@@ -4,7 +4,7 @@ import sys
 
 # Check arguments.
 if len(sys.argv) < 3:
-    print("Error: Missing arguments.")
+    print("Error: missing arguments.")
     print("Usage: lookup.py <input-data-file> <query>")
     sys.exit(1)
 if not sys.argv[1].endswith((".user", ".repo")):

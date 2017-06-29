@@ -1,4 +1,4 @@
-.PHONY : all clean
+.PHONY : clean
 
 CXX = g++
 
@@ -10,11 +10,7 @@ octomender : $(COBJS)
 	@echo "> Building $@"
 	@$(CXX) $(CFLAGS) $^ -o $@
 
-main.o : main.cpp myUtil.h
-	@echo "> Compiling $@"
-	@$(CXX) $(CFLAGS) -c $< -o $@
-
-%.o : %.cpp %.h
+%.o : %.cpp
 	@echo "> Compiling $@"
 	@$(CXX) $(CFLAGS) -c $< -o $@
 
