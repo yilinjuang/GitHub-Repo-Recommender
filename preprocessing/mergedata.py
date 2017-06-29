@@ -1,20 +1,15 @@
-# NetworkX reference: https://networkx.readthedocs.io/en/stable/reference/algorithms.bipartite.html
-
 import os
 import pickle
 import sys
 
 # Check arguments.
-if len(sys.argv) != 3:
+if len(sys.argv) < 3:
     print("Error: Missing arguments.")
-    print("Usage: generate.py <input-data-dir> <output-data-basename>")
+    print("Usage: mergedata.py <input-data-dir> <output-data-basename>")
     sys.exit(1)
 
-import networkx as nx
-from networkx.algorithms import bipartite
 
-
-# Load graph.
+# Load data.
 print("Loading...")
 files = [os.path.join(sys.argv[1], f) for f in os.listdir(sys.argv[1]) if f.startswith("2016")]
 print("{} files.".format(len(files)))
@@ -35,7 +30,8 @@ for filename in files:
             print("Error: unknown input file {}.".format(filename))
 print("users = {}, repos = {}, edges = {}"\
         .format(len(user_id2name), len(repo_id2name), len(user_repo_edges)))
-# Save to file.
+
+# Save to files.
 print("Saving...")
 with open("{}.user".format(sys.argv[2]), "wb") as f:
     pickle.dump(user_id2name, f)

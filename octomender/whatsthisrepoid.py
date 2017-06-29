@@ -1,7 +1,14 @@
 import pickle
 import sys
 
-with open("2016.repo", "rb") as f:
+
+# Check arguments.
+if len(sys.argv) < 3:
+    print("Error: Missing arguments.")
+    print("Usage: whatsthisrepoid.py <input-log-file> <input-repo-data-file>")
+    sys.exit(1)
+
+with open(sys.argv[2], "rb") as f:
     repo_id2name = pickle.load(f)
 
 with open(sys.argv[1], "r") as f:
@@ -14,6 +21,6 @@ with open(sys.argv[1], "r") as f:
         score = float(score.strip(" \n").split(" ")[-1])
         repo_name = repo_id2name[repo_id]
         if score == 0.0:
-            print("Starred repo:    {:<40s}".format(repo_name))
+            print("Starred repo:    {:<50s}".format(repo_name))
         else:
-            print("To-star repo:    {:<40s}{:.4f}".format(repo_name, score))
+            print("To-star repo:    {:<50s}{:.4f}".format(repo_name, score))

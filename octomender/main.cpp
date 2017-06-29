@@ -17,8 +17,7 @@
 
 #include "myUtil.h"
 
-#define USAGE   "final inputfile"
-#define _n  1936247
+#define USAGE "octomender <input-edgelist>"
 
 using std::cerr;
 using std::cout;
@@ -198,53 +197,6 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-
-    /*
-    struct BestEdge {
-        double value;
-        int i, j;
-    };
-    BestEdge g_jaccard{0.0, 0, 0}, g_adamic{0.0, 0, 0};
-
-    int n_threads = 30;
-    #pragma omp declare reduction(isbetter:BestEdge: \
-              omp_out.value<omp_in.value ? omp_out=omp_in : omp_out) \
-    initializer(omp_priv = BestEdge{0.0, 0, 0})
-    #pragma omp parallel for num_threads(n_threads) default(none) shared(list, cout) reduction(isbetter:g_jaccard, g_adamic)
-    for(int i = 0; i < _n; i++) {
-        if(list[i]->empty()) continue;
-
-        BestEdge jaccard{0.0, 0, 0}, adamic{0.0, 0, 0};
-        for(int j = i + 1; j < _n; j++) {
-            if(list[j]->empty()) continue;
-            vector<int> intersect;
-            double tmp_j = findIntersect((*list[i]), (*list[j]), intersect);
-            if(jaccard.value < tmp_j)
-                 jaccard = BestEdge{tmp_j, i, j};
-            if(g_jaccard.value < tmp_j)
-                 g_jaccard = BestEdge{tmp_j, i, j};
-
-            double tmp_a = calcAdamic(intersect, list);
-            if(adamic.value < tmp_a)
-                 adamic = BestEdge{tmp_a, i, j};
-            if(g_adamic.value < tmp_a)
-                 g_adamic = BestEdge{tmp_a, i, j};
-        }
-        if (i % 1000 == 0) {
-            cout << "finish processing node " << i << "...\n"
-                  << ", J = " << jaccard.value << " at " << jaccard.j
-                  << ", A = " << adamic.value << " at " << adamic.j << endl;
-        }
-    }
-
-    cout << "Largest Jaccard coefficient: " << g_jaccard.value
-          << "\nbetween " << g_jaccard.i << " and " << g_jaccard.j << endl;
-    cout << "Largest Adamic coefficient: " << g_adamic.value
-          << "\nbetween " << g_adamic.i << " and " << g_adamic.j << endl;
-
-    return 0;
-}
-*/
 
 double
 findIntersect(const Vertex* v1, const set<Vertex*>& nset2, set<Vertex*>& c) {
