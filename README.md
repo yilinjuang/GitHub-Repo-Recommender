@@ -7,6 +7,7 @@ Github Repo Recommender System.
 2017 Network Science Final Project with J. C. Liang.
 
 ## Requirement
+- python3
 - [NetworkX](https://github.com/networkx/networkx): High-productivity software for complex networks.
 - [NumPy](https://github.com/numpy/numpy)
 - [SciPy](https://github.com/scipy/scipy)
@@ -103,4 +104,14 @@ Convert log file to readable format including interpret repo id to repo name.
 ```
 Usage: whatsthisrepoid.py <input-log-file> <input-repo-data-file>
 Ex:    whatsthisrepoid.py log/2017-05.log data/2017-05.repo
+```
+
+### [lookup.py](octomender/lookup.py)
+Look up the corresponding id/name of user/repo to name/id of it.
+```
+Usage: lookup.py <input-data-file> <query>
+Ex:    lookup.py data/2017-05.user frankyjuang
+Ex:    lookup.py data/2017-05.user 6175880
+Ex:    lookup.py data/2017-05.repo tensorflow/tensorflow
+Ex:    lookup.py data/2017-05.repo 45717250
 ```
