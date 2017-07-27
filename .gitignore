@@ -1,3 +1,7 @@
 *.o
+*.so
 octomender/octomender
+octomender/2016*
+uia/2016*
+uia/backup/
 __pycache__
