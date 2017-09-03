@@ -1,4 +1,5 @@
 import ctypes
+import datetime
 import pickle
 import sys
 import threading
@@ -47,6 +48,12 @@ try:
         if uid in all_predict:
             if len(all_predict[uid]) == 0:
                 print("Debug: {} is previously skipped.".format(uid))
+                if uid in ["500775", "1732196", "2844591", "3759759", "4370605",
+                           "4688315", "5527642", "5877145", "6257454", "6948067"]:
+                    print("Debug: too many degrees.")
+                    #  continue
+                else:
+                    print("Debug: unknown issue. Try again now.")
             else:
                 print("Debug: {} already fetched.".format(uid))
                 continue
@@ -55,9 +62,10 @@ try:
         t.start()
         while t.is_alive():
             t.join(60.0)
-        print("Elasped time: {:.0f}".format(time.time() - start_time))
+        print("Elasped time: {:.0f}s ({})".format(time.time() - start_time, datetime.datetime.now()))
 except KeyboardInterrupt:
-    print("\nDebug: interrupted.")
+    print("Debug: interrupted.")
 finally:
+    print("Debug: save to file {}.".format(sys.argv[3]))
     with open(sys.argv[3], "wb") as f:
         pickle.dump(all_predict, f)

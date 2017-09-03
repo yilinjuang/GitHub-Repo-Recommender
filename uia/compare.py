@@ -7,9 +7,9 @@ import sys
 
 
 # Check arguments.
-if len(sys.argv) < 3:
+if len(sys.argv) < 4:
     print("Error: missing arguments.")
-    print("Usage: predict.py <input-starred-data> <input-predict-data>")
+    print("Usage: compare.py <input-starred-data> <input-predict-data>, <output-predict-basename>")
     sys.exit(1)
 
 print("Loading starred")
@@ -21,48 +21,51 @@ with open(sys.argv[2], "rb") as f:
     ALL_PREDICT = pickle.load(f)
 
 print("Comparing")
-for uid in ALL_PREDICT.keys():
-    if len(ALL_PREDICT[uid]) == 0:
-        continue
+for n_top in range(10, 100, 10):
+    print(n_top)
+    f = open("{}{}.txt".format(sys.argv[3], n_top), "w")
+    for uid in ALL_PREDICT.keys():
+        if len(ALL_PREDICT[uid]) == 0:
+            continue
+        assert len(ALL_PREDICT[uid]) == 100
 
-    print("UID: {}".format(uid))
-    rid_2017 = []  # 2017
-    rid_2016 = []  # 2016
-    rid_past = []  # ~2015
+        f.write("UID: {}\n".format(uid))
+        rid_2017 = []  # 2017
+        rid_2016 = []  # 2016
+        rid_past = []  # ~2015
 
-    for star in ALL_STAR[uid]:
-        rid = star['repo']['id']
-        timestamp = datetime.datetime.strptime(star['starred_at'],
-                                               "%Y-%m-%dT%H:%M:%SZ")
-        if timestamp.year == 2017:
-            rid_2017.append(rid)
-        elif timestamp.year == 2016:
-            rid_2016.append(rid)
-        else:
-            rid_past.append(rid)
+        for star in ALL_STAR[uid]:
+            rid = star['repo']['id']
+            timestamp = datetime.datetime.strptime(star['starred_at'],
+                                                   "%Y-%m-%dT%H:%M:%SZ")
+            if timestamp.year == 2017:
+                rid_2017.append(rid)
+            elif timestamp.year == 2016:
+                rid_2016.append(rid)
+            else:
+                rid_past.append(rid)
 
-    hit_2017 = 0
-    hit_2016 = 0
-    hit_past = 0
-    miss = 0
-    for predict_rid in ALL_PREDICT[uid]:
-        if predict_rid in rid_2017:
-            hit_2017 += 1
-        elif predict_rid in rid_2016:
-            hit_2016 += 1
-        elif predict_rid in rid_past:
-            hit_past += 1
-        else:
-            miss += 1
+        hit_2017 = 0
+        hit_2016 = 0
+        hit_past = 0
+        miss = 0
+        for predict_rid in ALL_PREDICT[uid][:n_top]:
+            if predict_rid in rid_2017:
+                hit_2017 += 1
+            elif predict_rid in rid_2016:
+                hit_2016 += 1
+            elif predict_rid in rid_past:
+                hit_past += 1
+            else:
+                miss += 1
 
-    n_predict = len(ALL_PREDICT[uid])
-    assert n_predict == hit_2017 + hit_2016 + hit_past + miss
-    # assert hit_2016 == 0
-    print("Hit 2017:  {:> 6.2f}% ({:>3}/{})".format(hit_2017/n_predict*100,
-                                                    hit_2017, n_predict))
-    print("Hit 2016:  {:> 6.2f}% ({:>3}/{})".format(hit_2016/n_predict*100,
-                                                    hit_2016, n_predict))
-    print("Hit ~2015: {:> 6.2f}% ({:>3}/{})".format(hit_past/n_predict*100,
-                                                    hit_past, n_predict))
-    print("Hit all:   {:> 6.2f}% ({:>3}/{})".format((hit_2017+hit_past)/n_predict*100,
-                                                    (hit_2017+hit_past), n_predict))
+        assert n_top == hit_2017 + hit_2016 + hit_past + miss
+        f.write("Hit 2017:  {:> 6.2f}% ({:>3}/{})\n".format(hit_2017/n_top*100,
+                                                            hit_2017, n_top))
+        f.write("Hit 2016:  {:> 6.2f}% ({:>3}/{})\n".format(hit_2016/n_top*100,
+                                                            hit_2016, n_top))
+        f.write("Hit ~2015: {:> 6.2f}% ({:>3}/{})\n".format(hit_past/n_top*100,
+                                                            hit_past, n_top))
+        f.write("Hit all:   {:> 6.2f}% ({:>3}/{})\n".format((hit_2017+hit_past)/n_top*100,
+                                                            (hit_2017+hit_past), n_top))
+    f.close()
